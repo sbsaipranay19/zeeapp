@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 
 public class Register {
+	
 	private String id;
 	private String firstName;
 	private String lastName;

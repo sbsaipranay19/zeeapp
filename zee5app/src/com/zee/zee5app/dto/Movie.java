@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Movie {
+	
 	private String movieName;
 	private String category;
 	private String releaseDate;
@@ -11,4 +12,5 @@ public class Movie {
 	private String[] cast;
 	private double length;
 	private String id;
+	
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Series {
+	
 	private String seriesName;
 	private String seriesCategory;
 	private String releaseDate;
@@ -11,4 +12,5 @@ public class Series {
 	private String[] cast;
 	private double length;
 	private String id;
+	
 }

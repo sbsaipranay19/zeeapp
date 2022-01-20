@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Subscription {
+	
 	private String DOP;
 	private String status;
 	private String packCountry;
@@ -11,4 +12,5 @@ public class Subscription {
 	private Boolean autoRenewal;
 	private String expiryDate;
 	private String id;
+	
 }
