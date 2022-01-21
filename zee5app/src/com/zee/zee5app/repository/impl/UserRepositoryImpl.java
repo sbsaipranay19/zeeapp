@@ -1,12 +1,16 @@
 package com.zee.zee5app.repository.impl;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 import com.zee.zee5app.dto.Register;
 import com.zee.zee5app.repository.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {
 	
-	private Register[] registers = new Register[10];
-	private static int count=0;
+//	private Register[] registers = new Register[10];
+	private ArrayList<Register> registers = new ArrayList<Register>();
+//	private static int count=0;
 	
 	private UserRepositoryImpl(){
 		
@@ -25,66 +29,36 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public String addUser(Register register) {
 		
-		if(count==registers.length) {
-			Register temp[] = new Register[registers.length*2];		
-			System.arraycopy(registers, 0, temp, 0, registers.length);
-			registers= temp;
-			registers[count++] = register;			
-			return "success";			
+		boolean result = this.registers.add(register);
+		if(result) {
+			return "success";
 		}
-		registers[count++] = register;
-		return "success";
+		return "fail";
 		
 	}
-
-	@Override
-	public String updateUser(String id, String newId) {
-		
-		for (Register register : registers) {
-			if(register!=null && register.getId().equals(id) ) {
-				register.setId(newId);	
-				return "Update Success";
-				}
-		}
-		return "No ID found";
-		
-	}
-
-	@Override
-	public Register getUserById(String id) {
-		
-		for (Register register : registers) {
-			if(register!=null && register.getId().equals(id) ) {
-				return register;
-			}
-		}
-		return null;
-		
-	}
-
-	@Override
-	public Register[] getAllUsers() {
-		// TODO Auto-generated method stub
-		return registers;
-	}
-
 	@Override
 	public String deleteUserById(String id) {
+			return null;
+	}
+	@Override
+	public ArrayList<Register> getAllUsers() {
+				return registers;
+	}
+	@Override
+	public Optional<Register> getUserById(String id) {
 		
-		Register temp[] = new Register[registers.length-1];
-		int index=0;
+		Register register2 = null;
 		for (Register register : registers) {
-			if(register!=null && register.getId().equals(id) ) {
-				break;
+			if(register.getId().equals(id)) {
+				register2= register;
 			}
-			index++;
 		}
-		int rem = registers.length - (index+1);
-		System.arraycopy(registers, 0, temp, 0, index);
-		System.arraycopy(registers, index+1, temp, index, rem);
-		registers = temp;
-		return "Deletion Success";
+		return Optional.ofNullable(register2);
 		
 	}
+	@Override
+	public String updateUser(String id, String newId) {
+			return null;
+		}
 
 }

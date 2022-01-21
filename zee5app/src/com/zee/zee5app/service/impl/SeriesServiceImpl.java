@@ -1,11 +1,8 @@
 package com.zee.zee5app.service.impl;
 
 import com.zee.zee5app.dto.Series;
-import com.zee.zee5app.repository.MovieRepository;
 import com.zee.zee5app.repository.SeriesRepository;
-import com.zee.zee5app.repository.impl.MovieRepositoryImpl;
 import com.zee.zee5app.repository.impl.SeriesRepositoryImpl;
-import com.zee.zee5app.service.MovieService;
 import com.zee.zee5app.service.SeriesService;
 
 public class SeriesServiceImpl implements SeriesService {

@@ -1,22 +1,29 @@
 package com.zee.zee5app;
 
-import java.util.Iterator;
+import java.util.Optional;
+
+import javax.naming.InvalidNameException;
 
 import com.zee.zee5app.service.*;
 import com.zee.zee5app.service.impl.SubscriptionServiceImpl;
 import com.zee.zee5app.service.impl.*;
 import com.zee.zee5app.dto.*;
-import com.zee.zee5app.repository.impl.*;
+import com.zee.zee5app.exception.InvalidEmailException;
+import com.zee.zee5app.exception.InvalidIdLengthException;
+import com.zee.zee5app.exception.InvalidPasswordException;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InvalidNameException, InvalidIdLengthException, InvalidEmailException, InvalidPasswordException {
+		
 		//Register
 		
-		Register register = new Register();	
-		register.setFirstName("Sai");
-		register.setLastName("pranay");
-		register.setEmail("sai@gmail.com");		
-		System.out.println(register);
+//		Register register = new Register();	
+		Register register7 = new Register("sai0001","Sai","Pranay","sai123@gmail.com","sai123");
+		System.out.println(register7);
+//		register.setFirstName("Sai");
+//		register.setLastName("pranay");
+//		register.setEmail("sai@gmail.com");		
+//		System.out.println(register);
 		
 		Login login = new Login();
 		login.setUserName("sb19");
@@ -29,18 +36,33 @@ public class Main {
 		
 		for(int i=1;i<=3;i++) {
 			Register register2 = new Register();
-			register2.setId("ab00"+i);
-			register2.setFirstName("abhi"+i);
-			register2.setLastName("sai"+i);
-			register2.setPassword("Sai");
+			try {
+				register2.setId("ab00000"+i);
+				register2.setFirstName("abhi"+i);
+				register2.setLastName("sai"+i);
+				register2.setEmail("sai"+i+"@gmail.com");
+				register2.setPassword("Sai000");
+			} catch (InvalidIdLengthException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidNameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidEmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidPasswordException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			String result = service.addUser(register2);
 			System.out.println(result+" "+i);
 		}
 		
-		Register register2 = service.getUserById("ab001");
+		Optional<Register> register2 = service.getUserById("ab001");
 		System.out.println(register2!=null);
 		
-		String register4 = service.deleteUserById("ab002");
+		String register4 = service.deleteUserById("ab000002");
 		System.out.println(register4);
 		
 		String register5 = service.updateUser("ab001","ab002");
@@ -91,7 +113,7 @@ public class Main {
 		}
 		
 		Movie movie = movieServ.getMovieById("movie001");
-		System.out.println(subs!=null);
+		System.out.println(movie!=null);
 		
 		String movie1 = movieServ.deleteMovie("movie002");
 		System.out.println(movie1);
@@ -117,7 +139,7 @@ public class Main {
 		}
 		
 		Series series = seriesServ.getSeriesById("series001");
-		System.out.println(subs!=null);
+		System.out.println(series!=null);
 		
 		String series1 = seriesServ.deleteSeries("series002");
 		System.out.println(series1);
