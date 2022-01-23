@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.naming.InvalidNameException;
+
 import com.zee.zee5app.exception.InvalidEmailException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidPasswordException;
@@ -12,12 +13,13 @@ import com.zee.zee5app.exception.InvalidPasswordException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
-//@EqualsAndHashCode
-//@NoArgsConstructor
-public class Register {
+@ToString
+public class Register implements Comparable<Register> {
+	
 	public Register(String id, String firstName, String lastName, String email, String password) throws InvalidIdLengthException, InvalidNameException, InvalidEmailException, InvalidPasswordException {
 		
 		super();
@@ -41,7 +43,6 @@ public class Register {
 	private String password;
 	
 	public Register() {
-		System.out.println("hello ");
 	}
 
 	public void setId(String id) throws InvalidIdLengthException {
@@ -110,6 +111,12 @@ public class Register {
 			throw new InvalidPasswordException("Passwrod is Not Valid");
 		}
 		
+	}
+
+	@Override
+	public int compareTo(Register o) {
+		// TODO Auto-generated method stub
+		return this.id.compareTo(o.getId());
 	}
 	
 }

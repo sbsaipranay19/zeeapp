@@ -1,87 +1,94 @@
 package com.zee.zee5app.repository.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeSet;
+
 import com.zee.zee5app.dto.Series;
+import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.repository.SeriesRepository;
 
 public class SeriesRepositoryImpl implements SeriesRepository {
 	
-	private Series[] series1 = new Series[10];
-	private static int count=0;
+	private TreeSet<Series> series1 = new TreeSet<>();
 	
-	private SeriesRepositoryImpl() {
-		// TODO Auto-generated constructor stub
+	private SeriesRepositoryImpl(){
 		
 	}
 	
-	private static SeriesRepository seriesRepository;
+	private static SeriesRepository repository;
 	public static SeriesRepository getInstance() {
-		if(seriesRepository==null)
-			seriesRepository = new SeriesRepositoryImpl();
-		return seriesRepository;
+		
+		if(repository== null) {
+			repository = new SeriesRepositoryImpl();
+		}
+		return repository;
+		
 	}
-
+	
 	@Override
 	public String addSeries(Series series) {
 		
-		if(count==series1.length) {
-			Series temp[] = new Series[series1.length*2];		
-			System.arraycopy(series1, 0, temp, 0, series1.length);
-			series1= temp;
-			series1[count++] = series;			
-			return "success";			
+		boolean result = this.series1.add(series);
+		if(result) {
+			return "success";
 		}
-		series1[count++] = series;
-		return "success";
+		return "fail";
 		
 	}
-
+	
 	@Override
-	public Series getSeriesById(String id) {
-
-		for (Series series : series1) {
-			if(series!=null && series.getId().equals(id) ) {
-				return series;
-			}
-		}
-		return null;
+	public String deleteSeriesById(String id) throws IdNotFoundException {
 		
-	}
-
-	@Override
-	public Series[] getSeries() {
-		return series1;
-	}
-
-	@Override
-	public String updateSeries(String id, String newId) {
-			
-		for (Series series : series1) {
-			if(series!=null && series.getId().equals(id) ) {
-				series.setId(newId);	
-				return "Update Success";
+			Optional<Series> optional = this.getSeriesById(id);
+			if(optional.isPresent()) {
+				boolean result =series1.remove(optional.get());
+				if(result) {
+					return "Deletion Success";
+				}else {
+					return "Failure";
 				}
-		}
-		return "No ID found";
-		
+			}else {
+				throw new IdNotFoundException("ID Not Found");
+			}	
 	}
-
+	
 	@Override
-	public String deleteSeries(String id) {
+	public List<Series> getAllSeriess() {
+		return new ArrayList<>(series1);
+	}
+	
+	@Override
+	public Optional<Series> getSeriesById(String id) throws IdNotFoundException {
 		
-		Series temp[] = new Series[series1.length-1];
-		int index=0;
+		Series series2 = null;
 		for (Series series : series1) {
-			if(series!=null && series.getId().equals(id) ) {
+			if(series.getId().equals(id)) {
+				series2= series;
 				break;
 			}
-			index++;
 		}
-		int rem = series1.length - (index+1);
-		System.arraycopy(series1, 0, temp, 0, index);
-		System.arraycopy(series1, index+1, temp, index, rem);
-		series1 = temp;
-		return "Deletion Success";
+		return Optional.ofNullable(Optional.ofNullable(series2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
 		
 	}
+	
+	@Override
+	public Optional<Series> updateSeries(String id, String newId) throws IdNotFoundException, InvalidIdLengthException {
+		Series series2 = null;
+		for (Series series : series1) {
+			if(series.getId().equals(id)) {
+				series2 = series;
+				series.setId(newId);
+				System.out.println("Update Success");
+				break;
+			}
+		}
+		return Optional.ofNullable(Optional.ofNullable(series2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
+		}
 
 }
+
+
+

@@ -1,6 +1,11 @@
 package com.zee.zee5app.service.impl;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 import com.zee.zee5app.dto.Subscription;
+import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.repository.SubscriptionRepository;
 import com.zee.zee5app.repository.impl.SubscriptionRepositoryImpl;
 import com.zee.zee5app.service.SubscriptionService;
@@ -24,23 +29,23 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Subscription getSubscriptionById(String id) {
+	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException {
 		return repository.getSubscriptionById(id);
 	}
 
 	@Override
-	public Subscription[] getSubscription() {
-		return repository.getSubscription();
+	public ArrayList<Subscription> getAllSubscriptions() {
+		return repository.getAllSubscriptions();
 	}
 
 	@Override
-	public String updateSubscription(String id, String newId) {
+	public Optional<Subscription> updateSubscription(String id, String newId) throws IdNotFoundException, InvalidIdLengthException {
 		return repository.updateSubscription(id,newId);
 	}
 
 	@Override
-	public String deleteSubscription(String id) {
-		return repository.deleteSubscription(id);
+	public String deleteSubscriptionById(String id) throws IdNotFoundException {
+		return repository.deleteSubscriptionById(id);
 	}
 
 }

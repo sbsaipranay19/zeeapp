@@ -1,83 +1,97 @@
 package com.zee.zee5app.repository.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import com.zee.zee5app.dto.Subscription;
+import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.repository.SubscriptionRepository;
 
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 	
-	private Subscription[] subscriptions = new Subscription[2];
-	private static int count=0;
+	private List<Subscription> subscriptions = new ArrayList<>();
+	private SubscriptionRepositoryImpl(){
+		
+	}
 	
-	private static SubscriptionRepository subscriptionRepository;
-	
+	private static SubscriptionRepository repository;
 	public static SubscriptionRepository getInstance() {
-		if(subscriptionRepository==null)
-			subscriptionRepository = new SubscriptionRepositoryImpl();
-		return subscriptionRepository;
+		
+		if(repository== null) {
+			repository = new SubscriptionRepositoryImpl();
+		}
+		return repository;
+		
 	}
 	
 	@Override
 	public String addSubscription(Subscription subscription) {
 		
-		if(count==subscriptions.length) {
-			Subscription temp[] = new Subscription[subscriptions.length*2];		
-			System.arraycopy(subscriptions, 0, temp, 0, subscriptions.length);
-			subscriptions= temp;
-			subscriptions[count++] = subscription;			
-			return "success";			
+		boolean result = this.subscriptions.add(subscription);
+		if(result) {
+			return "success";
 		}
-		subscriptions[count++] = subscription;
-		return "success";
+		return "fail";
 		
 	}
-
+	
 	@Override
-	public Subscription getSubscriptionById(String id) {
+	public String deleteSubscriptionById(String id) throws IdNotFoundException {
 		
-		for (Subscription subscription : subscriptions) {
-			if(subscription!=null && subscription.getId().equals(id) ) {
-				return subscription;
-			}
-		}
-		return null;
-		
-	}
-
-	@Override
-	public Subscription[] getSubscription() {
-		return subscriptions;
-	}
-
-	@Override
-	public String updateSubscription(String id, String newId) {
-		
-		for (Subscription subscription : subscriptions) {
-			if(subscription!=null && subscription.getId().equals(id) ) {
-				subscription.setId(newId);	
-				return "Update Success";
+			Optional<Subscription> optional = this.getSubscriptionById(id);
+			if(optional.isPresent()) {
+				boolean result =subscriptions.remove(optional.get());
+				if(result) {
+					return "Deletion Success";
+				}else {
+					return "Failure";
 				}
-		}
-		return "No ID found";
-		
+			}else {
+				throw new IdNotFoundException("ID Not Found");
+			}
 	}
-
+	
+	public ArrayList<Subscription> getAllSubscriptions() {
+		Collections.sort(subscriptions);
+		return  (ArrayList<Subscription>) subscriptions;
+	}
+	
 	@Override
-	public String deleteSubscription(String id) {
+	public Optional<Subscription> getSubscriptionById(String id) throws IdNotFoundException {
 		
-		Subscription temp[] = new Subscription[subscriptions.length-1];
-		int index=0;
+		Subscription subscription2 = null;
 		for (Subscription subscription : subscriptions) {
-			if(subscription!=null && subscription.getId().equals(id) ) {
+			if(subscription.getId().equals(id)) {
+				subscription2= subscription;
 				break;
 			}
-			index++;
 		}
-		int rem = subscriptions.length - (index+1);
-		System.arraycopy(subscriptions, 0, temp, 0, index);
-		System.arraycopy(subscriptions, index+1, temp, index, rem);
-		subscriptions = temp;
-		return "Deletion Success";
+		return Optional.ofNullable(Optional.ofNullable(subscription2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
 		
 	}
-
+	
+	@Override
+	public Optional<Subscription> updateSubscription(String id, String newId) throws IdNotFoundException, InvalidIdLengthException {
+		Subscription subscription2 = null;
+		for (Subscription subscription : subscriptions) {
+			if(subscription.getId().equals(id)) {
+				subscription2 = subscription;
+				subscription.setId(newId);
+				System.out.println("Update Success");
+				break;
+			}
+		}	
+		return Optional.ofNullable(Optional.ofNullable(subscription2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
+	}
+	
 }
+
+
+
+
+
+
+

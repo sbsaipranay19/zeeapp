@@ -1,89 +1,107 @@
 package com.zee.zee5app.repository.impl;
 
+import java.util.HashSet;
+import java.util.Optional;
+
 import com.zee.zee5app.dto.Movie;
+import com.zee.zee5app.exception.IdNotFoundException;
+import com.zee.zee5app.exception.InvalidIdLengthException;
+import com.zee.zee5app.exception.MovieNotFoundException;
 import com.zee.zee5app.repository.MovieRepository;
 
 public class MovieRepositoryImpl implements MovieRepository {
 	
-	private Movie[] movies = new Movie[2];
-	private static int count=0;
-
-	private MovieRepositoryImpl() {
-		// TODO Auto-generated constructor stub
+	private HashSet<Movie> movies = new HashSet<>();
+	private MovieRepositoryImpl(){
 		
 	}
 	
-	private static MovieRepository movieRepository;
+	private static MovieRepository repository;
 	public static MovieRepository getInstance() {
 		
-		if(movieRepository==null)
-			movieRepository = new MovieRepositoryImpl();
-		return movieRepository;
+		if(repository== null) {
+			repository = new MovieRepositoryImpl();
+		}
+		return repository;
 		
 	}
 	
 	@Override
 	public String addMovie(Movie movie) {
 		
-		if(count==movies.length) {
-			Movie temp[] = new Movie[movies.length*2];		
-			System.arraycopy(movies, 0, temp, 0, movies.length);
-			movies= temp;
-			movies[count++] = movie;			
-			return "success";			
+		boolean result = this.movies.add(movie);
+		if(result) {
+			return "success";
 		}
-		movies[count++] = movie;
-		return "success";
+		return "fail";
 		
 	}
-
+	
 	@Override
-	public Movie getMovieById(String id) {
+	public String deleteMovieById(String id) throws IdNotFoundException {
 		
-		for (Movie movie : movies) {
-			if(movie!=null && movie.getId().equals(id) ) {
-				return movie;
-			}
-		}
-		return null;
-		
-	}
-
-	@Override
-	public Movie[] getMovies() {
-		return movies;
-	}
-
-	@Override
-	public String updateMovie(String id, String newId) {
-		
-		for (Movie movie : movies) {
-			if(movie!=null && movie.getId().equals(id) ) {
-				movie.setId(newId);	
-				return "Update Success";
+			Optional<Movie> optional = this.getMovieById(id);
+			if(optional.isPresent()) {
+				boolean result =movies.remove(optional.get());
+				if(result) {
+					return "Deletion Success";
+				}else {
+					return "Failure";
 				}
-		}
-		return "No ID found";
-		
+			}else {
+				throw new IdNotFoundException("ID Not Found");
+			}			
 	}
-
+	
 	@Override
-	public String deleteMovie(String id) {
+	public HashSet<Movie> getAllMovies() {
+		return  movies;
+	}
+	
+	@Override
+	public Optional<Movie> getMovieById(String id) throws IdNotFoundException {
 		
-		Movie temp[] = new Movie[movies.length-1];
-		int index=0;
+		Movie movie2 = null;
 		for (Movie movie : movies) {
-			if(movie!=null && movie.getId().equals(id) ) {
+			if(movie.getId().equals(id)) {
+				movie2= movie;
 				break;
 			}
-			index++;
 		}
-		int rem = movies.length - (index+1);
-		System.arraycopy(movies, 0, temp, 0, index);
-		System.arraycopy(movies, index+1, temp, index, rem);
-		movies = temp;
-		return "Deletion Success";
+		return Optional.ofNullable(Optional.ofNullable(movie2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
 		
 	}
-
+	
+	@Override
+	public Optional<Movie> updateMovie(String id, String newId) throws IdNotFoundException, InvalidIdLengthException {
+		Movie movie2 = null;
+		for (Movie movie : movies) {
+			if(movie.getId().equals(id)) {
+				movie2 = movie;
+				movie.setId(newId);
+				System.out.println("Update Success");
+				break;
+			}
+		}
+		
+		return Optional.ofNullable(Optional.ofNullable(movie2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
+	}
+	
+	@Override
+	public Optional<Movie> getMovie(String movieName) throws MovieNotFoundException {
+		Movie movie2 = null;
+		for (Movie movie : movies) {
+			if(movie.getMovieName().equals(movieName)) {
+				movie2= movie;
+				break;
+			}
+		}
+		return Optional.ofNullable(Optional.ofNullable(movie2).orElseThrow(()-> new MovieNotFoundException("Movie Not Found")));	
+	}
+	
 }
+
+
+
+
+
