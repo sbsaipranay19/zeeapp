@@ -64,7 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		Register register2 = null;
 		for (Register register : registers) {
-			if(register.getId().equals(id)) {
+			if(register.getRegId().equals(id)) {
 				register2= register;
 				break;
 			}
@@ -76,7 +76,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public Optional<Register> updateUser(String id, String newId) throws IdNotFoundException, InvalidIdLengthException {
 		Register register2 = null;
 		for (Register register : registers) {
-			if(register.getId().equals(id)) {
+			if(register.getRegId().equals(id)) {
 				register2 = register;
 				register.setId(newId);
 				System.out.println("Update Success");

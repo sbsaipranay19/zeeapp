@@ -11,7 +11,10 @@ import lombok.Setter;
 public class Series implements Comparable<Series> {
 	
 	private String seriesName;
-	private String seriesCategory;
+	private String genre;
+	private int ageLimit;
+	private String language;
+	private int no_of_episodes;
 	private String releaseDate;
 	@Setter(value = AccessLevel.NONE)
 	private String trailerLink;

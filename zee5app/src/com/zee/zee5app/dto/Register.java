@@ -1,5 +1,6 @@
 package com.zee.zee5app.dto;
 
+import java.math.BigInteger;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +33,7 @@ public class Register implements Comparable<Register> {
 	}
 
 	@Setter(value = AccessLevel.NONE)
-	private String id;
+	private String regId;
 	@Setter(value = AccessLevel.NONE)
 	private String firstName;
 	@Setter(value = AccessLevel.NONE)
@@ -41,6 +42,7 @@ public class Register implements Comparable<Register> {
 	private String email;
 	@Setter(value = AccessLevel.NONE)
 	private String password;
+	private BigInteger contactNumber;
 	
 	public Register() {
 	}
@@ -50,7 +52,7 @@ public class Register implements Comparable<Register> {
 		if(id.length()<=6) {
 			throw new InvalidIdLengthException("id length is lessthan or equal to 6");
 		}
-		this.id = id;
+		this.regId = id;
 		
 	}
 
@@ -83,14 +85,14 @@ public class Register implements Comparable<Register> {
 			return false;
 		Register other = (Register) obj;
 		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(regId, other.regId) && Objects.equals(lastName, other.lastName)
 				&& Objects.equals(password, other.password);
 		
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, firstName, id, lastName, password);
+		return Objects.hash(email, firstName, regId, lastName, password);
 	}
 
 	public void setEmail(String email) throws InvalidEmailException {
@@ -116,7 +118,7 @@ public class Register implements Comparable<Register> {
 	@Override
 	public int compareTo(Register o) {
 		// TODO Auto-generated method stub
-		return this.id.compareTo(o.getId());
+		return this.regId.compareTo(o.getRegId());
 	}
 	
 }

@@ -20,6 +20,7 @@ public class Subscription implements Comparable<Subscription> {
 	private int subscripAmount;
 	@Setter(value = AccessLevel.NONE)
 	private String id;
+	private String type;
 	
 	public void setId(String id) throws InvalidIdLengthException {
 		

@@ -30,6 +30,9 @@ public class Movie implements Comparable<Movie> {
 	
 	private String movieName;
 	private String category;
+	private int ageLimit;
+	private String genre;
+	private String language;
 	private String releaseDate;
 	private String trailerLink;
 	private String[] cast;
