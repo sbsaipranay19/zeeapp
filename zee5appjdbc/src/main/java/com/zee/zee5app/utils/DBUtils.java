@@ -8,53 +8,49 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBUtils {
+	public static DBUtils dbutils = null;
+	static Properties properties = null;
+
+	Connection connection = null;
 
 	private DBUtils() throws IOException {
-		// TODO Auto-generated constructor stub
-		properties = loadProperties();
+		properties = this.loadProperties();
 	}
-	private static DBUtils dbutils;
+
 	public static DBUtils getInstance() throws IOException {
-		if(dbutils ==null)
+		if (dbutils == null)
 			dbutils = new DBUtils();
 		return dbutils;
 	}
-	
-	public Connection	getConnection() {
-		Connection connection = null;
-		
-		try {
-			properties = loadProperties();
-			
-		connection =	DriverManager.getConnection
-			(properties.getProperty("jdbc.url"),
-					properties.getProperty("jdbc.username"),
-					properties.getProperty("jdbc.password"));
-			
-			System.out.println(properties);
-			return connection;
-		} catch (IOException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
+
 	public void closeConnection(Connection connection) {
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	Properties properties ;
-	private Properties loadProperties() throws IOException {
-	InputStream inputStream = 	DBUtils.class.getClassLoader().getResourceAsStream("application.properties");
-	
-	Properties properties = new Properties();
-	properties.load(inputStream);	
-	return properties;
-	
+
+	public Connection getConnection() {
+		try {
+			if (connection == null || connection.isClosed()) {
+				connection = DriverManager.getConnection(properties.getProperty("jdbc.url"),
+						properties.getProperty("jdbc.username"), properties.getProperty("jdbc.password"));
+				connection.setAutoCommit(false);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return connection;
 	}
+
+	public Properties loadProperties() throws IOException {
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
+		Properties properties = new Properties();
+		properties.load(inputStream);
+		return properties;
+	}
+
 }

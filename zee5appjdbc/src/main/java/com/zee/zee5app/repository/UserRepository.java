@@ -13,8 +13,8 @@ public interface UserRepository {
 	public String addUser(Register register);
 	public String updateUser(String id, Register register);
 	public Optional<Register> getUserById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidNameException;
-	public Register[] getAllUsers();
-	public List<Register> getAllUserDetails();
+	public Register[] getAllUsers() throws InvalidIdLengthException, InvalidNameException;
+	public Optional<List<Register>> getAllUserDetails() throws InvalidIdLengthException, InvalidNameException;
 	public String deleteUserById(String id) throws IdNotFoundException;
 
 }

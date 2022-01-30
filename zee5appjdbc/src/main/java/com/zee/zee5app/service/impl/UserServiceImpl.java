@@ -52,9 +52,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Register[] getAllUsers() {
+	public Register[] getAllUsers() throws InvalidIdLengthException, InvalidNameException {
 		// TODO Auto-generated method stub
-		return null;
+		return userRepository.getAllUsers();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Register> getAllUserDetails() {
+	public Optional<List<Register>> getAllUserDetails() throws InvalidIdLengthException, InvalidNameException {
 		// TODO Auto-generated method stub
 		return userRepository.getAllUserDetails();
 	}
