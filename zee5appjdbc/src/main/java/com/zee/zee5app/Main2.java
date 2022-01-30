@@ -11,24 +11,24 @@ public class Main2 {
 
 		try {
 			Register register = new Register("sai0001", "Sai Pranay", "SB", "sai319@gmail.com", "123456");
-			
+
 			System.out.println(register);
 			System.out.println(register.toString());
-			System.out.println("hash code "+register.hashCode());
+			System.out.println("hash code " + register.hashCode());
 			Register register2 = new Register("sai0001", "Sai Pranay", "SB", "sai319@gmail.com", "123456");
 			System.out.println(register2);
 			System.out.println(register2.toString());
 			System.out.println(register2.hashCode());
 			System.out.println(register);
 			System.out.println(register.toString());
-			System.out.println("hash code "+register2.hashCode());
-			System.out.println("equals method call"+register.equals(register2));
-			
+			System.out.println("hash code " + register2.hashCode());
+			System.out.println("equals method call" + register.equals(register2));
+
 		} catch (InvalidIdLengthException | InvalidNameException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

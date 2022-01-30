@@ -1,23 +1,10 @@
 package com.zee.zee5app;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-
-import com.zee.zee5app.dto.Login;
-import com.zee.zee5app.dto.ROLE;
-import com.zee.zee5app.dto.Register;
-import com.zee.zee5app.exception.InvalidIdLengthException;
-import com.zee.zee5app.exception.InvalidNameException;
-import com.zee.zee5app.service.LoginService;
-import com.zee.zee5app.service.UserService;
-import com.zee.zee5app.service.impl.LoginServiceImpl;
-import com.zee.zee5app.service.impl.UserServiceImpl;
-
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 //		UserService service;
 //		try {
 //			service = UserServiceImpl.getInstance();
@@ -44,8 +31,7 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
-		
+
 //		try {
 //			Register register = new Register("sai0006", "Sai Pranay", "SB", "sai369@gmail.com", "123456");
 //			
@@ -63,17 +49,14 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}	
-		
-		try {
-			LoginService service = LoginServiceImpl.getInstance();
-			service.changeRole("sai369@gmail.com", ROLE.ROLE_ADMIN);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 
-		
+//		try {
+//			LoginService service = LoginServiceImpl.getInstance();
+//			service.changeRole("sai369@gmail.com", ROLE.ROLE_ADMIN);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		try {
 //			UserService service = UserServiceImpl.getInstance();
 //			Optional<Register> register = service.getUserById("sai0001");
@@ -91,8 +74,87 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
-		
+//		try {
+//			Subscription subscription = new Subscription("subs007", "2022-01-26", "2023-01-26", 1000,"Credit","active","annual","no", "sai0001");
+//			SubscriptionService service = SubscriptionServiceImpl.getInstance();
+//			Optional<Subscription> subscription = service.getSubscriptionById("sai0001");
+//			System.out.println(subscription.get());		
+//			String result = service.addSubscription(subscription);
+//			System.out.println(result);
+//			Optional<Subscription> result = service.updateSubscription("sai0001",subscription);
+//			System.out.println(result.get());
+//			SubscriptionService service = SubscriptionServiceImpl.getInstance();
+//			String subscription = service.deleteSubscriptionById("sai0001");
+//			
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//			try {
+//				SeriesService service = SeriesServiceImpl.getInstance();
+//				(seriesId,seriesName,ageLimit,cast,genre,length,releaseDate,language,no_of_episodes)
+//				Series series = new Series("series05","loser",18,"Priyadarshi","Sports",39.57,"https://www.youtube.com/watch?v=W_ZxZ0X8GDw","2022-01-27","telugu",6);
+//				 service.addSeries(series);
+//				 Series series1 = new Series("series06","loser",18,"Priyadarshi","Sports",39.57,"https://www.youtube.com/watch?v=W_ZxZ0X8GDw","2022-01-27","telugu",6);
+//				 service.addSeries(series1);
+//				 Series series2 = new Series("series01","loser",18,"Priyadarshi","Sports",39.57,"https://www.youtube.com/watch?v=W_ZxZ0X8GDw","2022-01-27","telugu",6);
+//				 Optional<Series> result = service.updateSeries("series07",series2);
+//				 Series series3 = new Series("series08","loser",18,"Priyadarshi","Sports",39.57,"https://www.youtube.com/watch?v=W_ZxZ0X8GDw","2022-01-27","telugu",6);
+//				 service.deleteSeries("series04");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InvalidIdLengthException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IdNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (LocationNotFOundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		try {
+//			MovieService service = MovieServiceImpl.getInstance();
+//			(seriesId,seriesName,ageLimit,cast,genre,length,releaseDate,language,no_of_episodes)
+//			Movie movie = new Movie("movie01","loser",18,"Priyadarshi","Sports",39.57,"https://www.youtube.com/watch?v=W_ZxZ0X8GDw","2022-01-27","telugu");
+//			 service.addMovie(movie);
+//			 Movie movie1 = new Movie("movie06","loser",18,"Priyadarshi","Sports",39.57,"https://www.youtube.com/watch?v=W_ZxZ0X8GDw","2022-01-27","telugu");
+//			 service.addMovie(movie1);
+//			Movie movie2 = new Movie("movie01", "loser", 18, "Priyadarshi", "Sports", 39.57,
+//					"https://www.youtube.com/watch?v=W_ZxZ0X8GDw", "2022-01-27", "telugu");
+//			Optional<Movie> result = service.updateMovie("movie07", movie2);
+//			Movie movie3 = new Movie("movie08", "loser", 18, "Priyadarshi", "Sports", 39.57,
+//					"https://www.youtube.com/watch?v=W_ZxZ0X8GDw", "2022-01-27", "telugu");
+//			service.deleteMovie("movie04");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InvalidIdLengthException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IdNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		try {
+//			EpisodeService service = EpisodeServiceImpl.getInstance();
+////			(episodeId,seriesId,episodeName,episodeLength,location,trailer)
+//			Episodes episode = new Episodes("episode1","series01","episoden1",39.57,"find the location","https://www.youtube.com/watch?v=W_ZxZ0X8GDw");
+//			 service.addEpisode(episode);
+//			 Episodes episode1 = new Episodes("episode2","series01","episoden1",39.57,"find the location","https://www.youtube.com/watch?v=W_ZxZ0X8GDw");
+//			 service.addEpisode(episode1);
+//			Episodes episode2 = new Episodes("episode3","series01","episoden1",39.57,"find the location","https://www.youtube.com/watch?v=W_ZxZ0X8GDw");
+//			service.addEpisode(episode2);
+//			Episodes episode3 = new Episodes("episode4","series01","episoden1",39.57,"find the location","https://www.youtube.com/watch?v=W_ZxZ0X8GDw");
+//			service.addEpisode(episode3);
+//			service.deleteEpisodeById("episode4");
+
+//			Optional<Episodes> episode6 = service.getEpisodeById("episode3");
+//			System.out.println(episode6.get());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

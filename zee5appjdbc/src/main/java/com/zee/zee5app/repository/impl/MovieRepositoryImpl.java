@@ -1,107 +1,218 @@
 package com.zee.zee5app.repository.impl;
 
-import java.util.HashSet;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
-import com.zee.zee5app.exception.MovieNotFoundException;
 import com.zee.zee5app.repository.MovieRepository;
+import com.zee.zee5app.utils.DBUtils;
 
 public class MovieRepositoryImpl implements MovieRepository {
-	
-	private HashSet<Movie> movies = new HashSet<>();
-	private MovieRepositoryImpl(){
-		
-	}
-	
+
 	private static MovieRepository repository;
-	public static MovieRepository getInstance() {
-		
-		if(repository== null) {
+	DBUtils dbUtils = DBUtils.getInstance();
+
+	private MovieRepositoryImpl() throws IOException {
+
+	}
+
+	public static MovieRepository getInstance() throws IOException {
+
+		if (repository == null) {
 			repository = new MovieRepositoryImpl();
 		}
 		return repository;
-		
+
 	}
-	
+
 	@Override
-	public String addMovie(Movie movie) {
-		
-		boolean result = this.movies.add(movie);
-		if(result) {
-			return "success";
+	public Optional<Movie> getMovieById(String id) throws IdNotFoundException, InvalidIdLengthException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		String selectStatement = "select * from movies where id=?";
+
+		connection = dbUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(selectStatement);
+			preparedStatement.setString(1, id);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				Movie movie = new Movie();
+				movie.setId(resultSet.getString("id"));
+				movie.setAgeLimit(resultSet.getInt("ageLimit"));
+				movie.setCast(resultSet.getString("cast"));
+				movie.setGenre(resultSet.getString("genre"));
+				movie.setLanguage(resultSet.getString("language"));
+				movie.setLength(resultSet.getDouble("length"));
+				movie.setTrailerLink(resultSet.getString("trailer"));
+				movie.setReleaseDate(resultSet.getString("releaseDare"));
+				movie.setMovieName(resultSet.getString("movieName"));
+				return Optional.of(movie);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
 		}
-		return "fail";
-		
+
+		return Optional.empty();
 	}
-	
+
+	@Override
+	public Optional<Movie> updateMovie(String id, Movie movie) throws IdNotFoundException, InvalidIdLengthException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String updateStatement = "update movies set id=? , movieName= ?, ageLimit =?, cast=?, genre=?, length=?,trailer = ? , releaseDate=?, language=? where (id=?)";
+		connection = dbUtils.getConnection();
+
+		try {
+			preparedStatement = connection.prepareStatement(updateStatement);
+			preparedStatement.setString(1, movie.getId());
+			preparedStatement.setString(2, movie.getMovieName());
+			preparedStatement.setInt(3, movie.getAgeLimit());
+			preparedStatement.setString(4, movie.getCast());
+			preparedStatement.setString(5, movie.getGenre());
+			preparedStatement.setDouble(6, movie.getLength());
+			preparedStatement.setString(7, movie.getTrailerLink());
+			preparedStatement.setString(8, movie.getReleaseDate());
+			preparedStatement.setString(9, movie.getLanguage());
+			preparedStatement.setString(10, id);
+			int result = preparedStatement.executeUpdate();
+
+			if (result > 0) {
+				connection.commit();
+				return Optional.of(movie);
+			} else {
+				return Optional.ofNullable(movie);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
+		}
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<List<Movie>> getAllMovies() throws InvalidIdLengthException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Movie> arrayList = new ArrayList<>();
+		String selectStatement = "select * from movies where id=?";
+
+		connection = dbUtils.getConnection();
+		try {
+			preparedStatement = connection.prepareStatement(selectStatement);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				Movie movie = new Movie();
+				movie.setId(resultSet.getString("Id"));
+				movie.setAgeLimit(resultSet.getInt("ageLimit"));
+				movie.setCast(resultSet.getString("cast"));
+				movie.setGenre(resultSet.getString("genre"));
+				movie.setLanguage(resultSet.getString("language"));
+				movie.setLength(resultSet.getDouble("length"));
+				movie.setTrailerLink(resultSet.getString("trailer"));
+				movie.setReleaseDate(resultSet.getString("releaseDare"));
+				movie.setMovieName(resultSet.getString("movieName"));
+				arrayList.add(movie);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
+		}
+
+		return Optional.ofNullable(arrayList);
+	}
+
 	@Override
 	public String deleteMovieById(String id) throws IdNotFoundException {
-		
-			Optional<Movie> optional = this.getMovieById(id);
-			if(optional.isPresent()) {
-				boolean result =movies.remove(optional.get());
-				if(result) {
-					return "Deletion Success";
-				}else {
-					return "Failure";
-				}
-			}else {
-				throw new IdNotFoundException("ID Not Found");
-			}			
-	}
-	
-	@Override
-	public HashSet<Movie> getAllMovies() {
-		return  movies;
-	}
-	
-	@Override
-	public Optional<Movie> getMovieById(String id) throws IdNotFoundException {
-		
-		Movie movie2 = null;
-		for (Movie movie : movies) {
-			if(movie.getId().equals(id)) {
-				movie2= movie;
-				break;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String deleteStatement = "delete from movies where id=?";
+		connection = dbUtils.getConnection();
+
+		try {
+			preparedStatement = connection.prepareStatement(deleteStatement);
+			preparedStatement.setString(1, id);
+
+			int result = preparedStatement.executeUpdate();
+
+			if (result > 0) {
+				connection.commit();
+				return "success";
+			} else {
+				connection.rollback();
+				return "fail";
 			}
-		}
-		return Optional.ofNullable(Optional.ofNullable(movie2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
-		
-	}
-	
-	@Override
-	public Optional<Movie> updateMovie(String id, String newId) throws IdNotFoundException, InvalidIdLengthException {
-		Movie movie2 = null;
-		for (Movie movie : movies) {
-			if(movie.getId().equals(id)) {
-				movie2 = movie;
-				movie.setId(newId);
-				System.out.println("Update Success");
-				break;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+			e.printStackTrace();
+			return "fail";
+		} finally {
+			dbUtils.closeConnection(connection);
 		}
-		
-		return Optional.ofNullable(Optional.ofNullable(movie2).orElseThrow(()-> new IdNotFoundException("ID Not Found")));
 	}
-	
+
 	@Override
-	public Optional<Movie> getMovie(String movieName) throws MovieNotFoundException {
-		Movie movie2 = null;
-		for (Movie movie : movies) {
-			if(movie.getMovieName().equals(movieName)) {
-				movie2= movie;
-				break;
+	public String addMovie(Movie movie) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String insertStatement = "insert into movies(Id,movieName,ageLimit,cast,genre,length,trailer,releaseDate,language) values(?,?,?,?,?,?,?,?,?)";
+		connection = dbUtils.getConnection();
+
+		try {
+			preparedStatement = connection.prepareStatement(insertStatement);
+			preparedStatement.setString(1, movie.getId());
+			preparedStatement.setString(2, movie.getMovieName());
+			preparedStatement.setInt(3, movie.getAgeLimit());
+			preparedStatement.setString(4, movie.getCast());
+			preparedStatement.setString(5, movie.getGenre());
+			preparedStatement.setDouble(6, movie.getLength());
+			preparedStatement.setString(7, movie.getTrailerLink());
+			preparedStatement.setString(8, movie.getReleaseDate());
+			preparedStatement.setString(9, movie.getLanguage());
+			System.out.println("here");
+			int result = preparedStatement.executeUpdate();
+
+			if (result > 0) {
+				connection.commit();
+				return "success";
+			} else {
+				return "fail";
 			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
 		}
-		return Optional.ofNullable(Optional.ofNullable(movie2).orElseThrow(()-> new MovieNotFoundException("Movie Not Found")));	
+		return "success";
 	}
-	
+
 }
-
-
-
-
-

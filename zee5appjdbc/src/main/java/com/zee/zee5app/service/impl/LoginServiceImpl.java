@@ -9,25 +9,25 @@ import com.zee.zee5app.repository.impl.LoginRepositoryImpl;
 import com.zee.zee5app.service.LoginService;
 
 public class LoginServiceImpl implements LoginService {
-	
-	private LoginServiceImpl()  throws IOException {
+
+	private LoginServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	private static LoginService service;
-	
+
 	public static LoginService getInstance() throws IOException {
-		
-		if(service==null) {
+
+		if (service == null) {
 			service = new LoginServiceImpl();
 		}
-		
+
 		return service;
 	}
-	
-	//UserRepository userRepository ;
 
-	LoginRepository loginRepository  =  LoginRepositoryImpl.getInstance();
+	// UserRepository userRepository ;
+
+	LoginRepository loginRepository = LoginRepositoryImpl.getInstance();
 
 	@Override
 	public String addCredentials(Login login) {
@@ -46,7 +46,7 @@ public class LoginServiceImpl implements LoginService {
 		// TODO Auto-generated method stub
 		return loginRepository.deleteCredentials(userName);
 	}
-	
+
 	@Override
 	public String changeRole(String userName, ROLE role) {
 		// TODO Auto-generated method stub

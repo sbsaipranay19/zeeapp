@@ -17,9 +17,8 @@ import lombok.ToString;
 //@EqualsAndHashCode
 //@NoArgsConstructor
 //AllArgsConstructor
-public class Register implements Comparable<Register>
-{
-	
+public class Register implements Comparable<Register> {
+
 	public Register(String id, String firstName, String lastName, String email, String password)
 			throws InvalidIdLengthException, InvalidNameException {
 		super();
@@ -29,6 +28,7 @@ public class Register implements Comparable<Register>
 		this.email = email;
 		this.password = password;
 	}
+
 	@Setter(value = AccessLevel.NONE)
 	private String id;
 	@Setter(value = AccessLevel.NONE)
@@ -38,28 +38,29 @@ public class Register implements Comparable<Register>
 	private String email;
 	private String password;
 	private BigDecimal contactNumber;
-	
+
 	public Register() {
-		
+
 	}
 
 	public void setFirstName(String firstName) throws InvalidNameException {
-		
-		if(firstName==null || firstName=="" || firstName.length()<2) {
+
+		if (firstName == null || firstName == "" || firstName.length() < 2) {
 			throw new InvalidNameException("firstname is not valid");
 		}
 		this.firstName = firstName;
 	}
+
 	public void setLastName(String lastName) throws InvalidNameException {
-		if(lastName==null || lastName=="" || lastName.length()<2) {
-			throw new InvalidNameException("firstname is not valid");		
+		if (lastName == null || lastName == "" || lastName.length() < 2) {
+			throw new InvalidNameException("firstname is not valid");
 		}
 		this.lastName = lastName;
 	}
+
 	public void setId(String id) throws InvalidIdLengthException {
-		if(id.length()<6) {
-			throw new InvalidIdLengthException
-			("id length is lessthan or eq to 6");
+		if (id.length() < 6) {
+			throw new InvalidIdLengthException("id length is lessthan or eq to 6");
 		}
 		this.id = id;
 	}

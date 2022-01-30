@@ -14,25 +14,26 @@ import com.zee.zee5app.repository.impl.UserRepositoryImpl;
 import com.zee.zee5app.service.UserService;
 
 public class UserServiceImpl implements UserService {
-	
-	private UserServiceImpl()  throws IOException {
+
+	private UserServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	private static UserService service;
-	
+
 	public static UserService getInstance() throws IOException {
-		
-		if(service==null) {
+
+		if (service == null) {
 			service = new UserServiceImpl();
 		}
-		
+
 		return service;
 	}
-	
-	//UserRepository userRepository ;
 
-	UserRepository userRepository  =  UserRepositoryImpl.getInstance();
+	// UserRepository userRepository ;
+
+	UserRepository userRepository = UserRepositoryImpl.getInstance();
+
 	@Override
 	public String addUser(Register register) {
 		// TODO Auto-generated method stub
@@ -46,7 +47,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<Register> getUserById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidNameException {
+	public Optional<Register> getUserById(String id)
+			throws IdNotFoundException, InvalidIdLengthException, InvalidNameException {
 		// TODO Auto-generated method stub
 		return userRepository.getUserById(id);
 	}

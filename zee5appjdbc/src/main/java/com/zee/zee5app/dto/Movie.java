@@ -11,47 +11,49 @@ import lombok.Setter;
 @EqualsAndHashCode
 
 public class Movie implements Comparable<Movie> {
-	
-	public Movie(String movieName,String category,String releaseDate,String trailerLink,String[] cast,double length,String id) throws InvalidIdLengthException {
-		
+
+	public Movie() {
+
+	}
+
+	public Movie(String id, String movieName, int ageLimit, String cast, String genre, double length,
+			String trailerLink, String releaseDate, String language) throws InvalidIdLengthException {
+		// TODO Auto-generated constructor stub
 		super();
 		this.setCast(cast);
 		this.setMovieName(movieName);
-		this.setCategory(category);
+		this.setGenre(genre);
+		this.setAgeLimit(ageLimit);
 		this.setId(id);
 		this.setReleaseDate(releaseDate);
 		this.setTrailerLink(trailerLink);
 		this.setLength(length);
+		this.setLanguage(language);
 	}
-	
-	public Movie() {
-		
-	}
-	
+
 	private String movieName;
-	private String category;
 	private int ageLimit;
 	private String genre;
 	private String language;
 	private String releaseDate;
 	private String trailerLink;
-	private String[] cast;
+	private String cast;
 	private double length;
 	@Setter(value = AccessLevel.NONE)
 	private String id;
-	
+
 	public void setId(String id) throws InvalidIdLengthException {
-		
-		if(id.length()<=6) {
+
+		if (id.length() <= 6) {
 			throw new InvalidIdLengthException("id length is lessthan or equal to 6");
 		}
 		this.id = id;
-		
+
 	}
-	
+
 	public int compareTo(Movie o) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
 	}
-			
+
 }
