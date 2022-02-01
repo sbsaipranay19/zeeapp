@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Autowired
 	PasswordUtils passwordUtils;
 
-	private UserRepositoryImpl() throws IOException {
+	UserRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
 
 	}
@@ -67,7 +67,7 @@ public class UserRepositoryImpl implements UserRepository {
 			int result = preparedStatement.executeUpdate();
 
 			if (result > 0) {
-				connection.commit();
+//				connection.commit();
 				Login login = new Login();
 				login.setUserName(register.getEmail());
 				login.setPassword(encryptedPassword);
