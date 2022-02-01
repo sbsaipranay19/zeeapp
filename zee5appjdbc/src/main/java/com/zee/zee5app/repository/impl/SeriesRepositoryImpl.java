@@ -9,29 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.LocationNotFOundException;
 import com.zee.zee5app.repository.SeriesRepository;
-import com.zee.zee5app.utils.DBUtils;
 
+@Repository
 public class SeriesRepositoryImpl implements SeriesRepository {
 
-	DBUtils dbUtils = DBUtils.getInstance();
+	@Autowired
+	DataSource dataSource;
 
 	private SeriesRepositoryImpl() throws IOException {
-
-	}
-
-	private static SeriesRepository repository;
-
-	public static SeriesRepository getInstance() throws IOException {
-
-		if (repository == null) {
-			repository = new SeriesRepositoryImpl();
-		}
-		return repository;
 
 	}
 
@@ -40,7 +35,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String insertStatement = "insert into series(seriesId,seriesName,ageLimit,cast,genre,length,trailerLink,releaseDate,language,no_of_episodes) values(?,?,?,?,?,?,?,?,?,?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
@@ -67,8 +67,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 		return "success";
 	}
@@ -82,7 +80,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 
 		String selectStatement = "select * from series where seriesId=?";
 
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			preparedStatement.setString(1, id);
@@ -105,8 +108,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 
 		return Optional.empty();
@@ -118,7 +119,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String updateStatement = "update series set seriesId=? , seriesName= ?, ageLimit =?, cast=?, genre=?, length=?,trailerLink = ? , releaseDate=?, language=?, no_of_episodes=? where (seriesId=?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
@@ -145,8 +151,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 		return Optional.empty();
 	}
@@ -159,7 +163,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		ArrayList<Series> arrayList = new ArrayList<>();
 		String selectStatement = "select * from series";
 
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			resultSet = preparedStatement.executeQuery();
@@ -181,8 +190,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 
 		return Optional.ofNullable(arrayList);
@@ -193,7 +200,12 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String deleteStatement = "delete from series where seriesId=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
@@ -218,8 +230,6 @@ public class SeriesRepositoryImpl implements SeriesRepository {
 			}
 			e.printStackTrace();
 			return "fail";
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 	}
 

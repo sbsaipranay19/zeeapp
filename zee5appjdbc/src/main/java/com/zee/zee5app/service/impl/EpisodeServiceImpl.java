@@ -1,21 +1,24 @@
 package com.zee.zee5app.service.impl;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Episodes;
 import com.zee.zee5app.repository.EpisodeRepository;
-import com.zee.zee5app.repository.impl.EpisodeRepositoryImpl;
 import com.zee.zee5app.service.EpisodeService;
 
+@Service
 public class EpisodeServiceImpl implements EpisodeService {
 	
 	private EpisodeServiceImpl() throws IOException {
 
 	}
 
-	private EpisodeRepository repository = EpisodeRepositoryImpl.getInstance();
+	private static EpisodeRepository repository = null;
 	private static EpisodeService service = null;
 
 	public static EpisodeService getInstance() throws IOException {

@@ -4,20 +4,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Movie;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.repository.MovieRepository;
-import com.zee.zee5app.repository.impl.MovieRepositoryImpl;
 import com.zee.zee5app.service.MovieService;
 
+@Service
 public class MovieServiceImpl implements MovieService {
 
 	private MovieServiceImpl() throws IOException {
 
 	}
 
-	private MovieRepository repository = MovieRepositoryImpl.getInstance();
+	private static MovieRepository repository = null;
 	private static MovieService service = null;
 
 	public static MovieService getInstance() throws IOException {

@@ -4,17 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidAmountException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.repository.SubscriptionRepository;
-import com.zee.zee5app.repository.impl.SubscriptionRepositoryImpl;
 import com.zee.zee5app.service.SubscriptionService;
 
+@Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-	SubscriptionRepository repository = SubscriptionRepositoryImpl.getInstance();
+	private static SubscriptionRepository repository = null;
 
 	public SubscriptionServiceImpl() throws IOException {
 		// TODO Auto-generated constructor stub

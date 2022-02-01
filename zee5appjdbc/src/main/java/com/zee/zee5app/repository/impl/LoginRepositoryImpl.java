@@ -5,34 +5,36 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5app.dto.Login;
 import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.repository.LoginRepository;
-import com.zee.zee5app.utils.DBUtils;
 
+@Repository
 public class LoginRepositoryImpl implements LoginRepository {
 
-	DBUtils dbUtils = DBUtils.getInstance();
+	@Autowired
+	DataSource dataSource;
 
-	private LoginRepositoryImpl() throws IOException {
+	LoginRepositoryImpl() throws IOException {
 		// TODO Auto-generated constructor stub
-	}
-
-	private static LoginRepository repository;
-
-	public static LoginRepository getInstance() throws IOException {
-		if (repository == null) {
-			repository = new LoginRepositoryImpl();
-		}
-		return repository;
 	}
 
 	@Override
 	public String addCredentials(Login login) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String insertStatement = "insert into login" + " (userName,password,regId,role)" + " values(?,?,?,?)";
-		connection = dbUtils.getConnection();
 
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
@@ -41,9 +43,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 			preparedStatement.setString(3, login.getRegId());
 			preparedStatement.setString(4, login.getRole().toString());
 
-//			connection.commit();
 			int result = preparedStatement.executeUpdate();
-
 			if (result > 0) {
 				connection.commit();
 				return "success";
@@ -59,11 +59,16 @@ public class LoginRepositoryImpl implements LoginRepository {
 
 	@Override
 	public String deleteCredentials(String userName) {
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 
 		String deleteStatement = "DELETE FROM login WHERE username=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
 			preparedStatement.setString(1, userName);
@@ -88,18 +93,21 @@ public class LoginRepositoryImpl implements LoginRepository {
 				e1.printStackTrace();
 			}
 			return "Fail";
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 
 	}
 
 	@Override
 	public String changePassword(String userName, String password) {
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE login SET password=? WHERE username=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, password);
@@ -123,18 +131,21 @@ public class LoginRepositoryImpl implements LoginRepository {
 				e1.printStackTrace();
 			}
 			return "Fail";
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 	}
 
 	@Override
 	public String changeRole(String userName, ROLE role) {
 		// TODO Auto-generated method stub
-		Connection connection;
+		Connection connection = null;
 		PreparedStatement preparedStatement;
 		String updateStatement = "UPDATE login SET role=? WHERE username=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(updateStatement);
 			preparedStatement.setString(1, role.toString());
@@ -158,8 +169,6 @@ public class LoginRepositoryImpl implements LoginRepository {
 				e1.printStackTrace();
 			}
 			return "Fail";
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 	}
 

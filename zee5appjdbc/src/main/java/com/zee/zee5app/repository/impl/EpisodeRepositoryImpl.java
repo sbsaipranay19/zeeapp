@@ -9,25 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.zee.zee5app.dto.Episodes;
 import com.zee.zee5app.repository.EpisodeRepository;
-import com.zee.zee5app.utils.DBUtils;
 
+@Repository
 public class EpisodeRepositoryImpl implements EpisodeRepository {
 
-	private static EpisodeRepository repository;
-	DBUtils dbUtils = DBUtils.getInstance();
+	@Autowired
+	DataSource dataSource;
 
 	private EpisodeRepositoryImpl() throws IOException {
-
-	}
-
-	public static EpisodeRepository getInstance() throws IOException {
-
-		if (repository == null) {
-			repository = new EpisodeRepositoryImpl();
-		}
-		return repository;
 
 	}
 
@@ -39,7 +35,12 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 
 		String selectStatement = "select * from episodes where episodeId=?";
 
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			preparedStatement.setString(1, id);
@@ -58,8 +59,6 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
 		}
 
 		return Optional.empty();
@@ -73,7 +72,12 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 		ArrayList<Episodes> arrayList = new ArrayList<>();
 		String selectStatement = "select * from episodes";
 
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			preparedStatement = connection.prepareStatement(selectStatement);
 			resultSet = preparedStatement.executeQuery();
@@ -91,9 +95,7 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
-		}
+		} 
 
 		return Optional.ofNullable(arrayList);
 	}
@@ -103,7 +105,12 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String deleteStatement = "delete from episodes where episodeId=?";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		try {
 			preparedStatement = connection.prepareStatement(deleteStatement);
@@ -128,9 +135,7 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 			}
 			e.printStackTrace();
 			return "fail";
-		} finally {
-			dbUtils.closeConnection(connection);
-		}
+		} 
 	}
 
 	@Override
@@ -138,7 +143,12 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String insertStatement = "insert into episodes(episodeId,seriesId,episodeName,episodeLength,location,trailer) values(?,?,?,?,?,?)";
-		connection = dbUtils.getConnection();
+		try {
+			connection = dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			preparedStatement = connection.prepareStatement(insertStatement);
@@ -162,9 +172,7 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			dbUtils.closeConnection(connection);
-		}
+		} 
 		return "success";
 	}
 

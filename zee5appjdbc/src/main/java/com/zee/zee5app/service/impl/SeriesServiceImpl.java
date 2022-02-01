@@ -4,21 +4,23 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5app.dto.Series;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.LocationNotFOundException;
 import com.zee.zee5app.repository.SeriesRepository;
-import com.zee.zee5app.repository.impl.SeriesRepositoryImpl;
 import com.zee.zee5app.service.SeriesService;
 
+@Service
 public class SeriesServiceImpl implements SeriesService {
 
 	private SeriesServiceImpl() throws IOException {
 
 	}
 
-	SeriesRepository repository = SeriesRepositoryImpl.getInstance();
+	private static SeriesRepository repository =null;
 	private static SeriesService service = null;
 
 	public static SeriesService getInstance() throws IOException {

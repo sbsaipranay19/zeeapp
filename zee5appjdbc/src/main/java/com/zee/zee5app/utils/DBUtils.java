@@ -7,6 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DBUtils {
 	public static DBUtils dbutils = null;
 	static Properties properties = null;
@@ -15,12 +18,6 @@ public class DBUtils {
 
 	private DBUtils() throws IOException {
 		properties = this.loadProperties();
-	}
-
-	public static DBUtils getInstance() throws IOException {
-		if (dbutils == null)
-			dbutils = new DBUtils();
-		return dbutils;
 	}
 
 	public void closeConnection(Connection connection) {
