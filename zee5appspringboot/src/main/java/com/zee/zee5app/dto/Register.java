@@ -24,16 +24,6 @@ import lombok.ToString;
 @Table(name = "register")
 public class Register implements Comparable<Register> {
 
-//	public Register(String id, String firstName, String lastName, String email, String password)
-//			throws InvalidIdLengthException, InvalidNameException {
-//		super();
-//		this.setId(id);
-//		this.setFirstName(firstName);
-//		this.setLastName(lastName);
-//		this.email = email;
-//		this.password = password;
-//	}
-
 	@Id
 	@Column(name = "regId")
 	private String id;
