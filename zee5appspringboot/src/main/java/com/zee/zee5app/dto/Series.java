@@ -1,36 +1,45 @@
 package com.zee.zee5app.dto;
 
-import com.zee.zee5app.exception.InvalidIdLengthException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.zee.zee5app.exception.LocationNotFOundException;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
+@Entity
+@Table(name = "series", uniqueConstraints = { @UniqueConstraint(columnNames = "seriesName") })
 public class Series implements Comparable<Series> {
 
+	@NotBlank
 	private String seriesName;
+	@NotBlank
 	private String genre;
+	@NotNull
+	@Max(value = 70)
 	private int ageLimit;
+	@NotBlank
 	private String language;
-	private int no_of_episodes;
+	@NotNull
+	@Min(value = 1)
+	private int noOfEpisodes;
+	@NotBlank
 	private String releaseDate;
-	@Setter(value = AccessLevel.NONE)
+	@NotBlank
 	private String trailerLink;
+	@NotBlank
 	private String cast;
-	private double length;
-	@Setter(value = AccessLevel.NONE)
+	@Id
+	@Column(name = "seriesId")
 	private String seriesId;
-
-	public void setSeriesId(String id) throws InvalidIdLengthException {
-
-		if (id.length() <= 6) {
-			throw new InvalidIdLengthException("id length is lessthan or equal to 6");
-		}
-		this.seriesId = id;
-
-	}
 
 	@Override
 	public int compareTo(Series o) {
@@ -43,22 +52,6 @@ public class Series implements Comparable<Series> {
 			throw new LocationNotFOundException("Location Trailer Invalid");
 		}
 		this.trailerLink = trailerLink;
-	}
-
-	public Series(String seriesId, String seriesName, int ageLimit, String cast, String genre, double length,
-			String trailerLink, String releaseDate, String language, int no_of_episodes)
-			throws InvalidIdLengthException, LocationNotFOundException {
-		// TODO Auto-generated constructor stub
-		this.setAgeLimit(ageLimit);
-		this.setCast(cast);
-		this.setGenre(genre);
-		this.setLanguage(language);
-		this.setLength(length);
-		this.setNo_of_episodes(no_of_episodes);
-		this.setReleaseDate(releaseDate);
-		this.setSeriesId(seriesId);
-		this.setTrailerLink(trailerLink);
-		this.setSeriesName(seriesName);
 	}
 
 	public Series() {

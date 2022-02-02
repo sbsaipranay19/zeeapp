@@ -1,25 +1,34 @@
 package com.zee.zee5app.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "episode")
 public class Episodes {
-	public Episodes(String episodeId, String seriesId, String episodeName, double episodeLength, String location, String trailer) {
-		// TODO Auto-generated constructor stub
-		this.setEpisodeId(episodeId);
-		this.setEpisodeLength(episodeLength);
-		this.setEpisodeName(episodeName);
-		this.setLocation(location);
-		this.setSeriesId(seriesId);
-		this.setTrailer(trailer);
-	}
+
 	public Episodes() {
 		// TODO Auto-generated constructor stub
 	}
+
+	@Id
+	@Column(name = "episodeId")
 	private String episodeId;
+	@NotBlank
 	private String episodeName;
+	@NotNull
 	private double episodeLength;
+	@NotBlank
 	private String location;
+	@NotBlank
 	private String trailer;
+	@NotBlank
 	private String seriesId;
 }

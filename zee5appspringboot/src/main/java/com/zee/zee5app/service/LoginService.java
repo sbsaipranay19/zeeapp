@@ -1,7 +1,6 @@
 package com.zee.zee5app.service;
 
 import com.zee.zee5app.dto.Login;
-import com.zee.zee5app.dto.ROLE;
 
 public interface LoginService {
 
@@ -9,7 +8,4 @@ public interface LoginService {
 
 	public String deleteCredentials(String userName);
 
-	public String changePassword(String userName, String password);
-
-	String changeRole(String userName, ROLE role);
 }

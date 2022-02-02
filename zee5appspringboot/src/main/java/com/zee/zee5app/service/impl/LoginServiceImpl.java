@@ -1,59 +1,37 @@
 package com.zee.zee5app.service.impl;
 
+import java.util.Optional;
 
-import java.io.IOException;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Login;
-import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.repository.LoginRepository;
 import com.zee.zee5app.service.LoginService;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-
-	private LoginServiceImpl() throws IOException {
-		// TODO Auto-generated constructor stub
-	}
-
-	private static LoginService service;
-
-	public static LoginService getInstance() throws IOException {
-
-		if (service == null) {
-			service = new LoginServiceImpl();
-		}
-
-		return service;
-	}
-
-	// UserRepository userRepository ;
-
-	private static LoginRepository loginRepository = null;
+	@Autowired
+	private static LoginRepository repository;
 
 	@Override
 	public String addCredentials(Login login) {
 		// TODO Auto-generated method stub
-		return loginRepository.addCredentials(login);
+		Login result = repository.save(login);
+		if (result != null)
+			return "success";
+		return "fail";
 	}
 
 	@Override
 	public String deleteCredentials(String userName) {
-		// TODO Auto-generated method stub
-		return loginRepository.deleteCredentials(userName);
-	}
-
-	@Override
-	public String changePassword(String userName, String password) {
-		// TODO Auto-generated method stub
-		return loginRepository.deleteCredentials(userName);
-	}
-
-	@Override
-	public String changeRole(String userName, ROLE role) {
-		// TODO Auto-generated method stub
-		return loginRepository.changeRole(userName, role);
+		Optional<Login> register3 = repository.findById(userName);
+		if (register3.isEmpty())
+			return "fail";
+		else {
+			repository.deleteById(userName);
+			return "success";
+		}
 	}
 
 }

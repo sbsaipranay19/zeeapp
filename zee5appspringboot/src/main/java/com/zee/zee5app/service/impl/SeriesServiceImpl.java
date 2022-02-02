@@ -1,9 +1,9 @@
 package com.zee.zee5app.service.impl;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5app.dto.Series;
@@ -16,46 +16,40 @@ import com.zee.zee5app.service.SeriesService;
 @Service
 public class SeriesServiceImpl implements SeriesService {
 
-	private SeriesServiceImpl() throws IOException {
-
-	}
-
-	private static SeriesRepository repository =null;
-	private static SeriesService service = null;
-
-	public static SeriesService getInstance() throws IOException {
-
-		if (service == null)
-			service = new SeriesServiceImpl();
-		return service;
-
-	}
+	@Autowired
+	private static SeriesRepository repository = null;
 
 	@Override
 	public String addSeries(Series series) {
-		return this.repository.addSeries(series);
+		// TODO Auto-generated method stub
+		Series result = repository.save(series);
+		if (result != null)
+			return "success";
+		return "fail";
 	}
 
 	@Override
 	public Optional<Series> getSeriesById(String id)
 			throws IdNotFoundException, InvalidIdLengthException, LocationNotFOundException {
-		return repository.getSeriesById(id);
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(repository.getById(id));
 	}
 
 	@Override
 	public Optional<List<Series>> getSeries() throws InvalidIdLengthException, LocationNotFOundException {
-		return repository.getAllSeriess();
-	}
-
-	@Override
-	public Optional<Series> updateSeries(String id, Series series)
-			throws IdNotFoundException, InvalidIdLengthException {
-		return repository.updateSeries(id, series);
+		// TODO Auto-generated method stub
+		return Optional.ofNullable(repository.findAll());
 	}
 
 	@Override
 	public String deleteSeries(String id) throws IdNotFoundException {
-		return repository.deleteSeriesById(id);
+		Optional<Series> register3 = repository.findById(id);
+		if (register3.isEmpty())
+			return "fail";
+		else {
+			repository.deleteById(id);
+			return "success";
+		}
 	}
 
 }

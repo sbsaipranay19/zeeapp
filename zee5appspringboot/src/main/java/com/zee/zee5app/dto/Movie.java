@@ -1,6 +1,13 @@
 package com.zee.zee5app.dto;
 
-import com.zee.zee5app.exception.InvalidIdLengthException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -9,47 +16,35 @@ import lombok.Setter;
 
 @Data
 @EqualsAndHashCode
-
+@Entity
+@Table(name = "movie", uniqueConstraints = { @UniqueConstraint(columnNames = "movieName") })
 public class Movie implements Comparable<Movie> {
 
 	public Movie() {
 
 	}
 
-	public Movie(String id, String movieName, int ageLimit, String cast, String genre, double length,
-			String trailerLink, String releaseDate, String language) throws InvalidIdLengthException {
-		// TODO Auto-generated constructor stub
-		super();
-		this.setCast(cast);
-		this.setMovieName(movieName);
-		this.setGenre(genre);
-		this.setAgeLimit(ageLimit);
-		this.setId(id);
-		this.setReleaseDate(releaseDate);
-		this.setTrailerLink(trailerLink);
-		this.setLength(length);
-		this.setLanguage(language);
-	}
-
+	@NotBlank
 	private String movieName;
+	@NotNull
+	@Max(value = 70)
 	private int ageLimit;
+	@NotBlank
 	private String genre;
+	@NotBlank
 	private String language;
+	@NotBlank
 	private String releaseDate;
+	@NotBlank
 	private String trailerLink;
+	@NotBlank
 	private String cast;
+	@NotNull
 	private double length;
+	@Id
+	@Column(name = "id")
 	@Setter(value = AccessLevel.NONE)
 	private String id;
-
-	public void setId(String id) throws InvalidIdLengthException {
-
-		if (id.length() <= 6) {
-			throw new InvalidIdLengthException("id length is lessthan or equal to 6");
-		}
-		this.id = id;
-
-	}
 
 	public int compareTo(Movie o) {
 		// TODO Auto-generated method stub

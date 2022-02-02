@@ -15,8 +15,6 @@ public interface MovieService {
 
 	public Optional<List<Movie>> getMovies() throws InvalidIdLengthException;
 
-	public Optional<Movie> updateMovie(String id, Movie movie) throws IdNotFoundException, InvalidIdLengthException;
-
 	public String deleteMovie(String id) throws IdNotFoundException;
 
 }

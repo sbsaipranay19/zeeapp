@@ -1,61 +1,50 @@
 package com.zee.zee5app.dto;
 
-import com.zee.zee5app.exception.InvalidAmountException;
-import com.zee.zee5app.exception.InvalidIdLengthException;
+import java.sql.Date;
 
-import lombok.AccessLevel;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
-import lombok.Setter;
 
 @Data
+@Entity
+@Table(name = "subscription")
 public class Subscription implements Comparable<Subscription> {
 
-	private String DOP;
+	@NotNull
+	private Date DOP;
+	@NotBlank
+	@Size(max = 5)
 	private String status;
+	@NotBlank
+	@Size(max = 10)
 	private String paymentMode;
+	@NotBlank
+	@Size(max = 5)
 	private String autoRenewal;
-	private String expiryDate;
-	@Setter(value = AccessLevel.NONE)
+	@NotNull
+	private Date expiryDate;
+	@NotNull
 	private int subscripAmount;
-	@Setter(value = AccessLevel.NONE)
+	@Id
+	@Column(name = "id")
 	private String id;
+	@NotBlank
+	@Size(max = 10)
 	private String type;
+	@NotBlank
 	private String regId;
-
-	public void setId(String id) throws InvalidIdLengthException {
-
-		if (id.length() <= 6) {
-			throw new InvalidIdLengthException("id length is lessthan or equal to 6");
-		}
-		this.id = id;
-
-	}
 
 	@Override
 	public int compareTo(Subscription o) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
-	}
-
-	public void setSubscripAmount(int subscripAmount) throws InvalidAmountException {
-		if (subscripAmount < 100) {
-			throw new InvalidAmountException("Invalid Amount");
-		}
-		this.subscripAmount = subscripAmount;
-	}
-
-	public Subscription(String id, String DOP, String expiryDate, int subscripAmount, String paymentMode, String status,
-			String type, String autoRenewal, String regId) throws InvalidIdLengthException, InvalidAmountException {
-		super();
-		this.setAutoRenewal(autoRenewal);
-		this.setDOP(DOP);
-		this.setExpiryDate(expiryDate);
-		this.setId(id);
-		this.setPaymentMode(paymentMode);
-		this.setRegId(regId);
-		this.setStatus(status);
-		this.setSubscripAmount(subscripAmount);
-		this.setType(type);
 	}
 
 	public Subscription() {

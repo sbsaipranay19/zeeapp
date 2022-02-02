@@ -1,25 +1,31 @@
 package com.zee.zee5app.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "login")
 public class Login implements Comparable<Login> {
-
-	public Login(String username, String password, String regId, ROLE role) {
-		// TODO Auto-generated constructor stub
-		this.setUserName(username);
-		this.setPassword(password);
-		this.setRegId(regId);
-		this.setRole(role);
-	}
 
 	public Login() {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Id
+	@Column(name = "userName")
 	private String userName;
+	@NotBlank
 	private String password;
+	@NotBlank
 	private String regId;
+	@NotNull
 	private ROLE role;
 
 	@Override

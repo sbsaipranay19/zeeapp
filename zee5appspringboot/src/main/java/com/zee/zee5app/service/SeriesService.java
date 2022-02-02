@@ -17,8 +17,6 @@ public interface SeriesService {
 
 	public Optional<List<Series>> getSeries() throws InvalidIdLengthException, LocationNotFOundException;
 
-	public Optional<Series> updateSeries(String id, Series series) throws IdNotFoundException, InvalidIdLengthException;
-
 	public String deleteSeries(String id) throws IdNotFoundException;
 
 }

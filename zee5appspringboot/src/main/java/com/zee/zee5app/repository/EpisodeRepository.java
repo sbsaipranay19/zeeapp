@@ -1,18 +1,11 @@
 package com.zee.zee5app.repository;
 
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.zee.zee5app.dto.Episodes;
 
-public interface EpisodeRepository {
-
-	public Optional<Episodes> getEpisodeById(String id);
-
-	public Optional<List<Episodes>> getAllEpisodes();
-
-	public String deleteEpisodeById(String id);
-
-	public String addEpisode(Episodes episode);
+@Repository
+public interface EpisodeRepository extends JpaRepository<Episodes, String> {
 
 }

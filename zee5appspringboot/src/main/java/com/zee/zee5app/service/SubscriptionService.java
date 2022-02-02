@@ -1,6 +1,6 @@
 package com.zee.zee5app.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.zee.zee5app.dto.Subscription;
@@ -15,11 +15,7 @@ public interface SubscriptionService {
 	public Optional<Subscription> getSubscriptionById(String id)
 			throws IdNotFoundException, InvalidAmountException, InvalidIdLengthException;
 
-	public Optional<ArrayList<Subscription>> getAllSubscriptions()
-			throws InvalidIdLengthException, InvalidAmountException;
-
-	public Optional<Subscription> updateSubscription(String id, Subscription subscription)
-			throws IdNotFoundException, InvalidIdLengthException;
+	public Optional<List<Subscription>> getAllSubscriptions() throws InvalidIdLengthException, InvalidAmountException;
 
 	public String deleteSubscriptionById(String id) throws IdNotFoundException;
 
