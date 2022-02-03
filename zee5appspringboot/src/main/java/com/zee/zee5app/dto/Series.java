@@ -1,8 +1,13 @@
 package com.zee.zee5app.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -14,10 +19,12 @@ import com.zee.zee5app.exception.LocationNotFOundException;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "series", uniqueConstraints = { @UniqueConstraint(columnNames = "seriesName") })
 public class Series implements Comparable<Series> {
 
@@ -55,9 +62,7 @@ public class Series implements Comparable<Series> {
 		}
 		this.trailerLink = trailerLink;
 	}
-
-	public Series() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
+	@OneToMany(mappedBy = "series", cascade=CascadeType.REMOVE)
+	private List<Episodes> episodes = new ArrayList<>();
 }

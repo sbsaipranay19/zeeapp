@@ -27,8 +27,8 @@ public class Login implements Comparable<Login> {
 	private String password;
 	@NotBlank
 	private String regId;
-	@NotNull
-	private ROLE role;
+//	@NotNull
+//	private ROLE role;
 
 	@Override
 	public int compareTo(Login o) {

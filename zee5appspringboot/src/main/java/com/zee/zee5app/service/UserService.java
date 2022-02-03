@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.exception.AlreadyExistsException;
 import com.zee.zee5app.exception.IdNotFoundException;
 import com.zee.zee5app.exception.InvalidIdLengthException;
 import com.zee.zee5app.exception.InvalidNameException;
 
 public interface UserService {
 
-	public String addUser(Register register);
+	public String addUser(Register register) throws AlreadyExistsException;
 
 //	public String updateUser(String id, Register register);
 

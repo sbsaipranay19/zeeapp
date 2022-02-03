@@ -16,18 +16,18 @@ public class SeriesTest {
 				args);
 		SeriesService service =applicationContext.getBean(SeriesService.class);
 		
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 6; i++) {
 			System.out.println("Adding Series" + i);
-			Series series = new Series("series05"+1, "loser", 18, "Priyadarshi", "Sports",
-					"https://www.youtube.com/watch?v=W_ZxZ0X8GDw", "2022-01-27", "telugu", 6);
+			Series series = new Series("series05"+i, "loser"+i, 18, "Priyadarshi", "Sports",
+					"https://www.youtube.com/watch?v=W_ZxZ0X8GDw", "2022-01-27", "telugu", 6, null);
 			System.out.println(service.addSeries(series));
 			System.out.println("Added Series: " + series.getSeriesId());
 		}
 
 		try {
-			System.out.println("SeriesId: movie01 isPresent()=" + service.getSeriesById("subs0071").isPresent());
-			System.out.println("Delete Series: movie01 " + service.deleteSeries("subs0071"));
-			System.out.println("All Series Details: \n" + service.getSeries());
+			System.out.println("SeriesId: series0051 isPresent()=" + service.getSeriesById("series051").isPresent());
+			System.out.println("Delete Series: series051 " + service.deleteSeries("series051"));
+//			System.out.println("All Series Details: \n" + service.getSeries());
 		} catch (IdNotFoundException | InvalidIdLengthException |LocationNotFOundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.Login;
-import com.zee.zee5app.dto.ROLE;
 import com.zee.zee5app.service.LoginService;
 
 public class LoginTest {
@@ -16,7 +15,7 @@ public class LoginTest {
 
 		for (int i = 0; i < 9; i++) {
 			System.out.println("Adding User" + i);
-			Login login = new Login("sai9649" + i + "@gmail.com", "1234567", "sai9149"+i, ROLE.ROLE_USER);
+			Login login = new Login("sai9649" + i + "@gmail.com", "1234567", "sai9149"+i);
 			System.out.println(service.addCredentials(login));
 			System.out.println("Added User: " + login.getRegId());
 		}

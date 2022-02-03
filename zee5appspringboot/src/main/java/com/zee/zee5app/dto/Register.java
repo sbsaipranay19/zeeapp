@@ -1,10 +1,15 @@
 package com.zee.zee5app.dto;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -51,5 +56,10 @@ public class Register implements Comparable<Register> {
 		// TODO Auto-generated method stub
 		return o.id.compareTo(this.id);
 	}
+
+	@ManyToMany
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "regId"), 
+	inverseJoinColumns = @JoinColumn(name = "roleId"))
+	private Set<Role> roles = new HashSet<>();
 
 }
