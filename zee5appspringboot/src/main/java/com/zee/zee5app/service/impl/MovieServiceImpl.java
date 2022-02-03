@@ -16,7 +16,7 @@ import com.zee.zee5app.service.MovieService;
 public class MovieServiceImpl implements MovieService {
 
 	@Autowired
-	private static MovieRepository repository;
+	private MovieRepository repository;
 
 	@Override
 	public String addMovie(Movie movie) {

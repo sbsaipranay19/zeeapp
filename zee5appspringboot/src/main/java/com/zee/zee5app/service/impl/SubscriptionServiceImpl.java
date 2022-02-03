@@ -16,7 +16,7 @@ import com.zee.zee5app.service.SubscriptionService;
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 	@Autowired
-	private static SubscriptionRepository repository = null;
+	private SubscriptionRepository repository;
 
 	@Override
 	public String addSubscription(Subscription subscription) {

@@ -7,9 +7,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @Entity
 @Table(name = "episode")
 public class Episodes {
@@ -31,4 +33,5 @@ public class Episodes {
 	private String trailer;
 	@NotBlank
 	private String seriesId;
+
 }

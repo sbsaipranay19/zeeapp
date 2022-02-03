@@ -12,34 +12,36 @@ import javax.validation.constraints.NotNull;
 
 import com.zee.zee5app.exception.LocationNotFOundException;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "series", uniqueConstraints = { @UniqueConstraint(columnNames = "seriesName") })
 public class Series implements Comparable<Series> {
 
+	@Id
+	@Column(name = "seriesId")
+	private String seriesId;
 	@NotBlank
 	private String seriesName;
-	@NotBlank
-	private String genre;
 	@NotNull
 	@Max(value = 70)
 	private int ageLimit;
+	@NotBlank
+	private String cast;
+	@NotBlank
+	private String genre;
+	@NotBlank
+	private String trailerLink;
+	@NotBlank
+	private String releaseDate;
 	@NotBlank
 	private String language;
 	@NotNull
 	@Min(value = 1)
 	private int noOfEpisodes;
-	@NotBlank
-	private String releaseDate;
-	@NotBlank
-	private String trailerLink;
-	@NotBlank
-	private String cast;
-	@Id
-	@Column(name = "seriesId")
-	private String seriesId;
 
 	@Override
 	public int compareTo(Series o) {

@@ -14,7 +14,7 @@ import com.zee.zee5app.service.EpisodeService;
 public class EpisodeServiceImpl implements EpisodeService {
 
 	@Autowired
-	private static EpisodeRepository repository;
+	private EpisodeRepository repository;
 
 	@Override
 	public Optional<Episodes> getEpisodeById(String id) {

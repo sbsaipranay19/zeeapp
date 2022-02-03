@@ -12,7 +12,7 @@ import com.zee.zee5app.service.LoginService;
 @Service
 public class LoginServiceImpl implements LoginService {
 	@Autowired
-	private static LoginRepository repository;
+	private LoginRepository repository;
 
 	@Override
 	public String addCredentials(Login login) {

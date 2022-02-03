@@ -17,7 +17,7 @@ import com.zee.zee5app.service.SeriesService;
 public class SeriesServiceImpl implements SeriesService {
 
 	@Autowired
-	private static SeriesRepository repository = null;
+	private SeriesRepository repository;
 
 	@Override
 	public String addSeries(Series series) {

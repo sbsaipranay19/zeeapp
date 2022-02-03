@@ -15,16 +15,15 @@ import com.zee.zee5app.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
-	private static UserRepository userRepository = null;
-//	private static UserService service;
-
-	// UserRepository userRepository ;
-
+	private UserRepository userRepository;
 	@Override
 	public String addUser(Register register) {
 		// TODO Auto-generated method stub
+		userRepository.findById(register.getId());
 		Register register2 = userRepository.save(register);
+		
 		if (register2 != null)
 			return "success";
 		else

@@ -9,13 +9,13 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Setter;
 
 @Data
 @EqualsAndHashCode
+@AllArgsConstructor
 @Entity
 @Table(name = "movie", uniqueConstraints = { @UniqueConstraint(columnNames = "movieName") })
 public class Movie implements Comparable<Movie> {
@@ -24,27 +24,26 @@ public class Movie implements Comparable<Movie> {
 
 	}
 
+	@Id
+	@Column(name = "id")
+	private String id;
 	@NotBlank
 	private String movieName;
 	@NotNull
 	@Max(value = 70)
 	private int ageLimit;
 	@NotBlank
+	private String cast;
+	@NotBlank
 	private String genre;
-	@NotBlank
-	private String language;
-	@NotBlank
-	private String releaseDate;
+	@NotNull
+	private double length;
 	@NotBlank
 	private String trailerLink;
 	@NotBlank
-	private String cast;
-	@NotNull
-	private double length;
-	@Id
-	@Column(name = "id")
-	@Setter(value = AccessLevel.NONE)
-	private String id;
+	private String releaseDate;
+	@NotBlank
+	private String language;
 
 	public int compareTo(Movie o) {
 		// TODO Auto-generated method stub
