@@ -39,7 +39,7 @@ public class Main2 {
 		roles.add(roleRepository.findById(2).get());
 		UserService service = applicationContext.getBean(UserService.class);
 		Register register = new Register("sai15381", "Sai Pranay", "SB", "sai02452@gmail.com", "123456",
-				new BigDecimal("987654290"), roles);
+				new BigDecimal("987654290"), roles, null);
 		try {
 		System.out.println(service.addUser(register));
 		} catch (AlreadyExistsException e) {

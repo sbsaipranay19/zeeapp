@@ -5,6 +5,8 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -40,8 +42,6 @@ public class Subscription implements Comparable<Subscription> {
 	@NotBlank
 	@Size(max = 5)
 	private String autoRenewal;
-	@NotBlank
-	private String regId;
 	
 
 	@Override
@@ -53,5 +53,9 @@ public class Subscription implements Comparable<Subscription> {
 	public Subscription() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	@OneToOne
+	@JoinColumn(name = "regId")
+	private Register register;
 
 }

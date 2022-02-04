@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -61,5 +63,8 @@ public class Register implements Comparable<Register> {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "regId"), 
 	inverseJoinColumns = @JoinColumn(name = "roleId"))
 	private Set<Role> roles = new HashSet<>();
+	
+	@OneToOne(mappedBy = "register", cascade = CascadeType.REMOVE)
+	private Subscription subscription;
 
 }
