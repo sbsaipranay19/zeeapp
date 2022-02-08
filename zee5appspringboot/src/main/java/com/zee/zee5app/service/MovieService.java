@@ -9,7 +9,7 @@ import com.zee.zee5app.exception.InvalidIdLengthException;
 
 public interface MovieService {
 
-	public String addMovie(Movie movie);
+	public Movie addMovie(Movie movie);
 
 	public Optional<Movie> getMovieById(String id) throws IdNotFoundException, InvalidIdLengthException;
 

@@ -12,6 +12,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -56,6 +59,7 @@ public class Subscription implements Comparable<Subscription> {
 	
 	@OneToOne
 	@JoinColumn(name = "regId")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Register register;
 
 }

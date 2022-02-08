@@ -19,12 +19,12 @@ public class MovieServiceImpl implements MovieService {
 	private MovieRepository repository;
 
 	@Override
-	public String addMovie(Movie movie) {
+	public Movie addMovie(Movie movie) {
 		// TODO Auto-generated method stub
 		Movie result = repository.save(movie);
 		if (result != null)
-			return "success";
-		return "fail";
+			return result;
+		return null;
 	}
 
 	@Override

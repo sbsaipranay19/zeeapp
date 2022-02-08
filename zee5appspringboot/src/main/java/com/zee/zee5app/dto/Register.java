@@ -1,6 +1,6 @@
 package com.zee.zee5app.dto;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +17,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +33,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "register")
 public class Register implements Comparable<Register> {
+
+	
 
 	@Id
 	@Column(name = "regId")
@@ -47,7 +51,7 @@ public class Register implements Comparable<Register> {
 	@NotBlank
 	private String password;
 	@NotNull
-	private BigDecimal contactNumber;
+	private BigInteger contactNumber;
 
 	public Register() {
 
@@ -64,7 +68,13 @@ public class Register implements Comparable<Register> {
 	inverseJoinColumns = @JoinColumn(name = "roleId"))
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToOne(mappedBy = "register", cascade = CascadeType.REMOVE)
+	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
+//	@JsonIgnore
 	private Subscription subscription;
+	
+	@OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
+//	@JsonIgnore
+//	@JsonSerialize(using = CustomListSerializer.class)
+	private Login login;
 
 }

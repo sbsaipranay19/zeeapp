@@ -3,6 +3,7 @@ package com.zee.zee5app.dto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -38,8 +39,10 @@ public class Movie implements Comparable<Movie> {
 	private String genre;
 	@NotNull
 	private double length;
+//	@Lob
+//	private byte[] trailer;
 	@NotBlank
-	private String trailerLink;
+	private String trailer;
 	@NotBlank
 	private String releaseDate;
 	@NotBlank

@@ -15,9 +15,9 @@ public class LoginTest {
 
 		for (int i = 0; i < 9; i++) {
 			System.out.println("Adding User" + i);
-			Login login = new Login("sai9649" + i + "@gmail.com", "1234567", "sai9149"+i);
+			Login login = new Login("sai9649" + i + "@gmail.com", "1234567", null);
 			System.out.println(service.addCredentials(login));
-			System.out.println("Added User: " + login.getRegId());
+//			System.out.println("Added User: " + login.getRegId());
 		}
 
 		System.out.println("Delete User: sai96491@gmail.com " + service.deleteCredentials("sai96491@gmail.com"));

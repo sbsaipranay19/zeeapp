@@ -1,0 +1,23 @@
+spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/zee5appjpa
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: com.zee.zee5app.utils.CustomNamingStrategy
+    show-sql: true  
+server:
+  servlet:
+    context-path: /api
+  port: 9005 
+  

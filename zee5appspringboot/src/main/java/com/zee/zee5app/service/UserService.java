@@ -11,16 +11,16 @@ import com.zee.zee5app.exception.InvalidNameException;
 
 public interface UserService {
 
-	public String addUser(Register register) throws AlreadyExistsException;
+	public Register addUser(Register register) throws AlreadyExistsException;
 
 //	public String updateUser(String id, Register register);
 
-	public Optional<Register> getUserById(String id)
+	public Register getUserById(String id)
 			throws IdNotFoundException, InvalidIdLengthException, InvalidNameException;
 
 	public Register[] getAllUsers() throws InvalidIdLengthException, InvalidNameException;
 
-	public String deleteUserById(String id) throws IdNotFoundException;
+	public String deleteUserById(String id) throws IdNotFoundException, InvalidIdLengthException, InvalidNameException;
 
-	public Optional<List<Register>> getAllUserDetails() throws InvalidIdLengthException, InvalidNameException;
+	public Optional<List<Register>> getAllUserDetails() ;
 }

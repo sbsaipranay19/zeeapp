@@ -45,30 +45,30 @@ public static void main(String[] args) {
 	Set<Role> roles = new HashSet<>();
 	roles.add(roleRepository.findById(1).get());
 	roles.add(roleRepository.findById(2).get());
-	
-	for (int i = 0; i < 9; i++) {
-		Register register = new Register("sai1538"+i, "Sai Pranay", "SB", "sai0"+i+"452@gmail.com", "123456",
-				new BigDecimal("987654290"), roles, null);
-		try {
-			System.out.println(service1.addUser(register));
-		} catch (AlreadyExistsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Subscription subscription = new Subscription("subs007"+i, Date.valueOf("2022-01-23") ,Date.valueOf("2023-01-23"), 1000, "Credit", "active",
-				"annual", "no", register);
-		System.out.println(service.addSubscription(subscription));
-		System.out.println("Added Subscription: " + subscription.getId());
-	}
-
-	try {
-		System.out.println("SubscriptionId: subs0071 isPresent()=" + service.getSubscriptionById("subs0071").isPresent());
-		System.out.println("Delete Subsription: subs0071 " + service.deleteSubscriptionById("subs0071"));
-//		System.out.println("All Subscription Details: \n" + service.getAllSubscriptions());
-	} catch (IdNotFoundException | InvalidIdLengthException |InvalidAmountException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} 
+//	
+//	for (int i = 0; i < 9; i++) {
+//		Register register = new Register("sai1538"+i, "Sai Pranay", "SB", "sai0"+i+"452@gmail.com", "123456",
+//				new BigDecimal("987654290"), roles, null);
+//		try {
+//			System.out.println(service1.addUser(register));
+//		} catch (AlreadyExistsException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		Subscription subscription = new Subscription("subs007"+i, Date.valueOf("2022-01-23") ,Date.valueOf("2023-01-23"), 1000, "Credit", "active",
+//				"annual", "no", register);
+//		System.out.println(service.addSubscription(subscription));
+//		System.out.println("Added Subscription: " + subscription.getId());
+//	}
+//
+//	try {
+//		System.out.println("SubscriptionId: subs0071 isPresent()=" + service.getSubscriptionById("subs0071").isPresent());
+//		System.out.println("Delete Subsription: subs0071 " + service.deleteSubscriptionById("subs0071"));
+////		System.out.println("All Subscription Details: \n" + service.getAllSubscriptions());
+//	} catch (IdNotFoundException | InvalidIdLengthException |InvalidAmountException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	} 
 	applicationContext.close();
 }
 }
