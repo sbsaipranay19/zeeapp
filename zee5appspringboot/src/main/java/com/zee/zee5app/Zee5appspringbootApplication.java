@@ -8,8 +8,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class Zee5appspringbootApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext applicationContext = SpringApplication.run(Zee5appspringbootApplication.class,
-				args);
+		ConfigurableApplicationContext applicationContext =
+				SpringApplication.run(Zee5appspringbootApplication.class, args);
 //		DataSource dataSource = applicationContext.getBean(DataSource.class);
 //		System.out.println(dataSource != null);
 //		UserService service = applicationContext.getBean(UserService.class);

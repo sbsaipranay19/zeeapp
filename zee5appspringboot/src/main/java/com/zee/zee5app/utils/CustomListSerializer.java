@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.zee.zee5app.dto.Login;
 
 public class CustomListSerializer extends StdSerializer<Login> {
+
 	@Override
 	public void serialize(Login value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 		// TODO Auto-generated method stub
 		gen.writeObject(value);
-
 	}
 
 	public CustomListSerializer() {
@@ -20,7 +20,8 @@ public class CustomListSerializer extends StdSerializer<Login> {
 		this(null);
 	}
 
-	protected CustomListSerializer(Class<Login> t) {
+	public CustomListSerializer(Class<Login> t) {
+		// TODO Auto-generated constructor stub
 		super(t);
 	}
 

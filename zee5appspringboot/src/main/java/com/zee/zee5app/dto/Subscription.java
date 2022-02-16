@@ -1,65 +1,61 @@
 package com.zee.zee5app.dto;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-@Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "subscription")
 public class Subscription implements Comparable<Subscription> {
-
+	
 	@Id
-	@Column(name = "id")
+	@Column(name = "subId")
 	private String id;
-	@NotNull
-	private Date DOP;
-	@NotNull
-	private Date expiryDate;
-	@NotNull
-	private int subscripAmount;
 	@NotBlank
-	@Size(max = 10)
+	private String dateOfPurchase;
+	@NotBlank
+	private String expiryDate;
+	@NotNull
+	private float amount;
+	@NotBlank
 	private String paymentMode;
 	@NotBlank
-	@Size(max = 10)
 	private String status;
 	@NotBlank
-	@Size(max = 10)
 	private String type;
 	@NotBlank
-	@Size(max = 5)
 	private String autoRenewal;
 	
-
+	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JoinColumn(name = "userId")
+	private User user;
+	
 	@Override
 	public int compareTo(Subscription o) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
 	}
-
-	public Subscription() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	@OneToOne
-	@JoinColumn(name = "regId")
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private Register register;
 
 }

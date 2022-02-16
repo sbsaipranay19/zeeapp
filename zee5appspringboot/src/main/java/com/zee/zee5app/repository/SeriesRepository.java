@@ -10,4 +10,5 @@ import com.zee.zee5app.dto.Series;
 @Repository
 public interface SeriesRepository extends JpaRepository<Series, String> {
 	Optional<Series> existsBySeriesNameAndLanguage(String seriesName,String language);
+	boolean existsBySeriesName(String seriesName);
 }

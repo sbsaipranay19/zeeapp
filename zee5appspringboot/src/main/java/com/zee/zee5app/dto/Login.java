@@ -1,52 +1,48 @@
 package com.zee.zee5app.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Data
-@Getter
 @Setter
-@Entity
+@Getter
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "login")
-public class Login {
-
-	public Login() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class Login implements Comparable<Login> {
+	
 	@Id
-	@Column(name = "userName")
-	private String userName;
+	@Email
+	private String username;
 	@NotBlank
 	private String password;
-//	@NotNull
-//	private ROLE role;
-
-	
 	
 	@OneToOne(fetch = FetchType.LAZY)
-//	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-//	@JsonSerialize(using = CustomListSerializer.class
-//	@Getter(value = AccessLevel.NONE)
-	@JoinColumn(name = "regId", nullable = false, foreignKey = @ForeignKey(name = "fk_logregId"))
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private Register register;
+	@JsonIgnore
+	@JoinColumn(name = "userId")
+	private User user;
+	
+	@Override
+	public int compareTo(Login o) {
+		// TODO Auto-generated method stub
+		return o.username.compareTo(this.getUsername());
+	}
 
 }

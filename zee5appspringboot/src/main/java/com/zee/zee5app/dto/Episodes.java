@@ -2,6 +2,7 @@ package com.zee.zee5app.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -9,33 +10,45 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "episode")
-public class Episodes {
-
-	public Episodes() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class Episodes implements Comparable<Episodes> {
+	
 	@Id
-	@Column(name = "episodeId")
-	private String episodeId;
+	@Column(name = "epiId")
+	private String id;
 	@NotBlank
-	private String episodeName;
+	private String name;
 	@NotNull
-	private double episodeLength;
+	private float length;
 	@NotBlank
 	private String location;
-	@NotBlank
 	private String trailer;
 	
-	@ManyToOne
-	@JoinColumn(name="seriesId")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JoinColumn(name = "serId")
 	private Series series;
+	
+	@Override
+	public int compareTo(Episodes o) {
+		// TODO Auto-generated method stub
+		return o.id.compareTo(this.getId());
+	}
 
 }

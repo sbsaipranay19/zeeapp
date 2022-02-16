@@ -5,14 +5,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class TrailerUtils {
+import org.springframework.stereotype.Component;
+
+@Component
+public class FileUtils {
+	
 	public byte[] readFile(File file) throws IOException {
-		byte[] allBytes = new byte[(int) file.length()];
+		byte[] allBytes = new byte[(int)file.length()];
 		FileInputStream fileInputStream = new FileInputStream(file);
 		fileInputStream.read(allBytes);
 		return allBytes;
 	}
-
+	
 	public String writeFile(byte[] allBytes, String fileName) {
 		FileOutputStream fileOutputStream = null;
 		try {
@@ -23,13 +27,6 @@ public class TrailerUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "Fail";
-		}finally {
-			try {
-				fileOutputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 

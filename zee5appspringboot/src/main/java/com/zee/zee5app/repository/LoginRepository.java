@@ -7,5 +7,5 @@ import com.zee.zee5app.dto.Login;
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, String> {
-	boolean existsByUserName(String userName);
+	Boolean existsByUsername(String username);
 }

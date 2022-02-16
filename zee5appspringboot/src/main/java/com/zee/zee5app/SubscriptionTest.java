@@ -9,7 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.zee.zee5app.dto.ERole;
-import com.zee.zee5app.dto.Register;
+import com.zee.zee5app.dto.User;
 import com.zee.zee5app.dto.Role;
 import com.zee.zee5app.dto.Subscription;
 import com.zee.zee5app.exception.AlreadyExistsException;

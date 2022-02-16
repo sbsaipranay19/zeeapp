@@ -1,4 +1,5 @@
 package com.zee.zee5app.dto;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,14 +18,12 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Role {
 	
-	@Id //Id must be auto generated
+	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int roleId;
-	
-	//it should be the value from available Enums
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 30)
 	private ERole roleName;
+
 }
-	
